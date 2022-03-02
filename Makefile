@@ -6,7 +6,7 @@
 #    By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 17:34:58 by brhajji-          #+#    #+#              #
-#    Updated: 2022/03/02 16:40:18 by brhajji-         ###   ########.fr        #
+#    Updated: 2022/03/02 18:08:01 by brhajji-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME			=	pipex
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g3
+CFLAGS			=	-Wall -Wextra -Werror -g
 
 RM				=	rm -f
 

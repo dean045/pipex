@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 11:29:58 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/02 16:34:19 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:43:20 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,22 @@ char	**get_path(char **envp)
 
 int	check_cmd(t_input *input, int cmd)
 {
-	int		x;
 	int		i;
 	char	*tmp;
 
 	i = -1;
-	x = 0;
 	while (input->path[++i])
 	{
 		tmp = ft_strjoin(input->path[i], input->cmd[cmd].cmd);
 		if (!access(tmp, F_OK))
-			x = 1;
-		free(input->cmd[cmd].cmd);
-		input->cmd[cmd].cmd = tmp;
+		{
+			free(input->cmd[cmd].cmd);
+			input->cmd[cmd].cmd = tmp;
+			return (1);
+		}
+		free(tmp);
 	}
-	return (x);
+	return (0);
 }
 
 int	check_file(char *file)

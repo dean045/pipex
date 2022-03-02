@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:33:45 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/02 16:35:49 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/02 19:25:50 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include<unistd.h>
 # include <sys/types.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 # include"../includes/ft_printf.h"
 
 typedef	struct s__cmd
@@ -30,6 +31,8 @@ typedef struct s_input
 	t_cmd	cmd[2];		
 	char	**path;
 	int		fd[2];
+	int		f1;
+	int		f2;
 	pid_t 	child1;
     pid_t 	child2;
 }	t_input;
@@ -41,4 +44,5 @@ char	**ft_split(char const *str, char c);
 int		check_cmd(t_input *input, int cmd);
 long unsigned int ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
+void	pipex(t_input *input, char **envp);
 #endif
