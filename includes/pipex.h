@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:33:45 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/02 19:25:50 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/03 16:52:56 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ typedef	struct s__cmd
 
 typedef struct s_input
 {
-	t_cmd	cmd[2];		
+	t_cmd	cmd[2];	
 	char	**path;
 	int		fd[2];
 	int		f1;
 	int		f2;
+	char	*tmp;
 	pid_t 	child1;
     pid_t 	child2;
 }	t_input;

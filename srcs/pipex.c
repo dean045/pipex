@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:40:10 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/02 20:33:04 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/03 16:55:56 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,20 @@ void run(t_input *input, int cmd, char **envp)
 		}
 		else if (cmd == 1)
 		{
+			input->f2 = open(input->tmp, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			if (input->f2 == -1)
+			{
+				perror("Outfile ");
+				exit(1);
+			}
 			dup2(input->f2, STDOUT_FILENO);
 			dup2(input->fd[0], STDIN_FILENO);
 			close(input->fd[1]);
 		}
 		if (execve(input->cmd[cmd].cmd, input->cmd[cmd].arg, envp) == -1)
 		{
-			perror("Error");//todo;
+			perror("Execve ");//todo;
+			exit(1);
 		}
 	}
 }
@@ -43,7 +50,7 @@ void	pipex(t_input *input, char **envp)
 		return ;//TODO
 	input->child1 = fork();
     if (input->child1 < 0)
-         return (perror("Fork: ")); //TODO
+         return (perror("Fork ")); //TODO
     if (input->child1 == 0)
 	{
         run(input, 0, envp);
@@ -57,4 +64,5 @@ void	pipex(t_input *input, char **envp)
     close(input->fd[1]);         // doing nothing
     waitpid(input->child1, &status, 0);  // supervising the children
     waitpid(input->child2, &status, 0);  // while they finish their tasks
+	//wait(NULL);
 }
