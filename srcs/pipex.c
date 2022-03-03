@@ -20,15 +20,15 @@ void run(t_input *input, int cmd, char **envp)
 		{
 			dup2(input->f1, STDIN_FILENO);
 			dup2(input->fd[1], STDOUT_FILENO);
-			close(input->fd[1]); 
+			close(input->fd[0]); 
 		}
-		if (cmd == 1)
+		else if (cmd == 1)
 		{
-			dup2(input->fd[0], STDIN_FILENO);
-			close(input->fd[0]);
 			dup2(input->f2, STDOUT_FILENO);
+			dup2(input->fd[0], STDIN_FILENO);
+			close(input->fd[1]);
 		}
-		if(execve(input->cmd[cmd].cmd, input->cmd[cmd].arg, envp) == -1)
+		if (execve(input->cmd[cmd].cmd, input->cmd[cmd].arg, envp) == -1)
 		{
 			perror("Error");//todo;
 		}

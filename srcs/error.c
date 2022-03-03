@@ -16,7 +16,15 @@ int	print_err(int	code)
 {
 	if (code)
 	{
-
+		if (code >= 1 && code <= 4)
+			perror("Bad input.\n");
+		if (code == 99)
+			perror("Error.\n");
+		if (code == -1)
+			perror("Can't open the file.\n");
+		if (code == 50)
+			perror("Invalid args.\n");
+		return (1);
 	}
 	return (0);
 }

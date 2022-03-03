@@ -12,6 +12,25 @@
 
 #include"../includes/pipex.h"
 
+int clean_pipex(t_input *input)
+{
+	if (input)
+	{
+		if (input->path)
+			free(input->path);
+		if (input->cmd[0].cmd)
+			free(input->cmd[0].cmd);
+		if (input->cmd[1].cmd)
+			free(input->cmd[1].cmd);
+		if (input->cmd[0].arg)
+			free(input->cmd[0].arg);
+		if (input->cmd[1].arg)
+			free(input->cmd[1].arg);
+		free(input);
+		input = NULL;
+	}
+	return (0);
+}
 
 void init_input(char **av, t_input **input, char **envp)
 {
@@ -40,13 +59,15 @@ int	main(int ac, char **av, char **envp)
 	{
 		init_input(av, &input, envp);
 		if (input->f1 < 0 || input->f2 < 0)
-        	return (-1);
-		//ft_printf("%i\n", check_cmd(input, 0));
+			return (clean_pipex(input) && print_err(-1));
 		if (!input)
-			return (1); //TODO
-		/*if (!print_err(check_parsing(av)))
-			return (0);*/
+			return (clean_pipex(input) && print_err(99));
+		if (!print_err(check_parsing(av)))
+			return (clean_pipex(input));
 		pipex(input, envp);
+		return (clean_pipex(input));
 	}
-	return (0);
+	else
+		return (print_err(50));
+	return (1);
 }
