@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:40:10 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 15:02:05 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 15:26:18 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	run(t_input *input, int cmd, char **envp)
 		else if (cmd == 1)
 		{
 			if (check_f2(input))
-				exit(1);
+				exit(clean_pipex(input, 1));
 			dup2(input->f2, STDOUT_FILENO);
 			dup2(input->fd[0], STDIN_FILENO);
 			close(input->fd[1]);
@@ -44,7 +44,7 @@ void	run(t_input *input, int cmd, char **envp)
 		if (execve(input->cmd[cmd].cmd, input->cmd[cmd].arg, envp) == -1)
 		{
 			perror("Execve ");
-			exit(1);
+			exit(clean_pipex(input, 1));
 		}
 	}
 }

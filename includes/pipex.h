@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:33:45 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 15:03:57 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 15:19:38 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int					check_cmd(t_input *input, int cmd);
 long unsigned int	ft_strlen(const char *str);
 char				*ft_strjoin(char const *s1, char const *s2);
 void				pipex(t_input *input, char **envp);
+int					clean_pipex(t_input *input, int x);
 #endif
