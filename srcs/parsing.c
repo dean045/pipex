@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 11:29:58 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 14:54:14 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 16:51:30 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	check_cmd(t_input *input, int cmd)
 	char	*tmp;
 
 	i = -1;
+	if (!access(input->cmd[cmd].cmd, F_OK))
+		return (1);
 	while (input->path[++i])
 	{
 		tmp = ft_strjoin(input->path[i], input->cmd[cmd].cmd);

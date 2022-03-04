@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:40:10 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 15:26:18 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 16:55:19 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	run(t_input *input, int cmd, char **envp)
 			exit(clean_pipex(input, 1));
 		}
 	}
+	else
+		perror("Command ");
 }
 
 void	pipex(t_input *input, char **envp)

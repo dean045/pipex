@@ -6,7 +6,7 @@
 #    By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 17:34:58 by brhajji-          #+#    #+#              #
-#    Updated: 2022/03/03 16:04:28 by brhajji-         ###   ########.fr        #
+#    Updated: 2022/03/04 16:24:18 by brhajji-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ RM				=	rm -f
 
 $(NAME):	$(OBJS)
 	cd printf && make
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) printf/libftprintf.a
+	$(CC) -o $(NAME) $(OBJS) printf/libftprintf.a
 
 all:		${NAME}
 
