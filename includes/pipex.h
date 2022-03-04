@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:33:45 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 15:19:38 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 17:50:30 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,19 @@ typedef struct s__cmd
 	char	**arg;
 }	t_cmd;
 
+typedef struct s__fd
+{
+	int		fd[2];
+}	t_fd;
+
 typedef struct s_input
 {
-	t_cmd	cmd[2];	
+	t_cmd	**cmd;	
 	char	**path;
-	int		fd[2];
+	t_fd	*fd;
 	int		f1;
 	int		f2;
+	int		nb_cmd;
 	char	*tmp;
 	pid_t	child1;
 	pid_t	child2;
@@ -49,4 +55,6 @@ long unsigned int	ft_strlen(const char *str);
 char				*ft_strjoin(char const *s1, char const *s2);
 void				pipex(t_input *input, char **envp);
 int					clean_pipex(t_input *input, int x);
+void				free_cmd(t_input *input);
+void				free_tab(char **tab);
 #endif

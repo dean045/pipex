@@ -6,11 +6,30 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 11:29:58 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 16:51:30 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:02:09 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../includes/pipex.h"
+
+void	free_cmd(t_input *input)
+{
+	int	i;
+
+	i = -1;
+	while (input->cmd && ++i < input->nb_cmd)
+	{
+		if (input->cmd[i])
+		{
+			free(input->cmd[i]->cmd);
+			free_tab(input->cmd[i]->arg);
+			free(input->cmd[i]);
+			input->cmd[i] = NULL;
+		}
+	}
+	if (input->cmd)
+		free(input->cmd);
+}
 
 int	check_parsing(char **str)
 {
@@ -52,15 +71,15 @@ int	check_cmd(t_input *input, int cmd)
 	char	*tmp;
 
 	i = -1;
-	if (!access(input->cmd[cmd].cmd, F_OK))
+	if (!access(input->cmd[cmd]->cmd, F_OK))
 		return (1);
 	while (input->path[++i])
 	{
-		tmp = ft_strjoin(input->path[i], input->cmd[cmd].cmd);
+		tmp = ft_strjoin(input->path[i], input->cmd[cmd]->cmd);
 		if (!access(tmp, F_OK))
 		{
-			free(input->cmd[cmd].cmd);
-			input->cmd[cmd].cmd = tmp;
+			free(input->cmd[cmd]->cmd);
+			input->cmd[cmd]->cmd = tmp;
 			return (1);
 		}
 		free(tmp);
