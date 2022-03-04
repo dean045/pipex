@@ -6,11 +6,11 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 17:50:09 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/02 12:30:40 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 15:02:22 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include"../includes/ft_printf.h"
+#include"../includes/ft_printf.h"
 
 int	ft_strlen2(char *str)
 {

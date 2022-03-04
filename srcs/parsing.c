@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 11:29:58 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/02 20:43:20 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:54:14 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**get_path(char **envp)
 		if (envp[i][0] == 'P' && envp[i][1] == 'A' && envp[i][2] == 'T'
 			&& envp[i][3] == 'H' && envp[i][4] == '=')
 		{
-			path = ft_split(envp[i] + 5,':');
+			path = ft_split(envp[i] + 5, ':');
 			return (path);
 		}
 	}

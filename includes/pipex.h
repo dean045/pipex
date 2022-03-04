@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:33:45 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/03 16:52:56 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 15:03:57 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/wait.h>
 # include"../includes/ft_printf.h"
 
-typedef	struct s__cmd
+typedef struct s__cmd
 {
 	char	*cmd;
 	char	**arg;
@@ -35,16 +35,17 @@ typedef struct s_input
 	int		f1;
 	int		f2;
 	char	*tmp;
-	pid_t 	child1;
-    pid_t 	child2;
+	pid_t	child1;
+	pid_t	child2;
 }	t_input;
 
-int		check_parsing(char **str);
-int		print_err(int	code);
-char	**get_path(char **envp);
-char	**ft_split(char const *str, char c);
-int		check_cmd(t_input *input, int cmd);
-long unsigned int ft_strlen(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	pipex(t_input *input, char **envp);
+int					check_parsing(char **str);
+int					print_err(int code);
+int					check_file(char *file);
+char				**get_path(char **envp);
+char				**ft_split(char const *str, char c);
+int					check_cmd(t_input *input, int cmd);
+long unsigned int	ft_strlen(const char *str);
+char				*ft_strjoin(char const *s1, char const *s2);
+void				pipex(t_input *input, char **envp);
 #endif

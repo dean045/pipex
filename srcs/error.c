@@ -6,13 +6,13 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 11:27:20 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/03 16:03:38 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:55:19 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../includes/pipex.h"
 
-int	print_err(int	code)
+int	print_err(int code)
 {
 	if (code)
 	{

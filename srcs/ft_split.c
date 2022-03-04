@@ -6,13 +6,13 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 11:40:35 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/01 15:22:40 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/04 14:53:49 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include<stdlib.h>
 
-long unsigned int ft_strlen(const char *str)
+long unsigned int	ft_strlen(const char *str)
 {
 	int	i;
 
