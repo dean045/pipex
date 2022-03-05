@@ -6,13 +6,14 @@
 #    By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 17:34:58 by brhajji-          #+#    #+#              #
-#    Updated: 2022/03/04 16:24:18 by brhajji-         ###   ########.fr        #
+#    Updated: 2022/03/05 15:15:18 by brhajji-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR = ./srcs
 
-SRCS	= main.c error.c ft_split.c ft_strjoin.c parsing.c pipex.c
+SRCS	= main.c error.c ft_split.c ft_strjoin.c parsing.c pipex.c ft_strcmp.c\
+			here_doc.c
 
 PRINTF_DIR = /printf
 

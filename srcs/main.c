@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:16:18 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/04 18:02:46 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:54:40 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ int	clean_pipex(t_input *input, int x)
 			close(input->f1);
 		if (input->f2)
 			close(input->f2);
+		if (input->limiter)
+			unlink(".here_doc_tmp");
 		free(input);
 		input = NULL;
 	}
 	return (x);
 }
 
-int	init_cmd(char **av, t_input *input)
+int	init_cmd(char **av, t_input *input, int here_doc)
 {
 	char	**tmp;
 	int		i;
@@ -55,7 +57,7 @@ int	init_cmd(char **av, t_input *input)
 	while (++i < input->nb_cmd)
 	{
 		input->cmd[i] = malloc(sizeof(t_cmd));
-		tmp = ft_split(av[i + 2], ' ');
+		tmp = ft_split(av[i + 2 + here_doc], ' ');
 		if (!input->cmd || !tmp)
 			return (-1);
 		input->cmd[i]->cmd = ft_strjoin("/", tmp[0]);
@@ -66,27 +68,40 @@ int	init_cmd(char **av, t_input *input)
 
 int	init_input(char **av, int ac, t_input **input, char **envp)
 {
+	int	here_doc;
 
+	here_doc = 0;
+	if (!ft_strcmp(av[1], "here_doc"))
+		here_doc = 1;
 	*input = malloc(sizeof(t_input));
 	if (!input)
 		return (1);
 	(*input)->f1 = 0;
 	(*input)->f2 = 0;
-	(*input)->nb_cmd = ac - 3;
-	(*input)->fd = malloc(sizeof(t_fd) * (ac - 2));
-	if (init_cmd(av , *input))
+	(*input)->nb_cmd = ac - (3 + here_doc);
+	(*input)->fd = malloc(sizeof(t_fd) * (ac - 2 - here_doc));
+	if (init_cmd(av , *input, here_doc))
 		return (1);
 	(*input)->path = get_path(envp);
 	(*input)->tmp = av[ac - 1];
-	if (!check_file(av[1]))
+	if (!here_doc)
 	{
-		(*input)->f1 = open(av[1], O_RDONLY);
+		if (!check_file(av[1]))
+		{
+			(*input)->f1 = open(av[1], O_RDONLY);
+			return (0);
+		}
+		else if (check_file(av[1]) == -2)
+			ft_printf("Infile : The infile is a directory.\n");
+		else
+			perror("Infile ");
+	}
+	else
+	{
+		(*input)->limiter = av[2];
+		(*input)->f1 = here_doc_init(*input);
 		return (0);
 	}
-	else if (check_file(av[1]) == -2)
-		ft_printf("Infile : The infile is a directory.\n");
-	else
-		perror("Infile ");
 	return (1);
 }
 
