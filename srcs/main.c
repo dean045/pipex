@@ -73,10 +73,11 @@ int	init_input(char **av, int ac, t_input **input, char **envp)
 	(*input)->f1 = 0;
 	(*input)->f2 = 0;
 	(*input)->nb_cmd = ac - 3;
-	(*input)->fd = malloc(sizeof(t_fd) * (ac - 4));
+	(*input)->fd = malloc(sizeof(t_fd) * (ac - 2));
 	if (init_cmd(av , *input))
 		return (1);
 	(*input)->path = get_path(envp);
+	(*input)->tmp = av[ac - 1];
 	if (!check_file(av[1]))
 	{
 		(*input)->f1 = open(av[1], O_RDONLY);
