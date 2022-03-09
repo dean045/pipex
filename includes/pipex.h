@@ -6,7 +6,7 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:33:45 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/05 15:39:14 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:59:40 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,11 @@ int					clean_pipex(t_input *input, int x);
 void				free_cmd(t_input *input);
 void				free_tab(char **tab);
 int					ft_strcmp(char *s1, char *s2);
-int	    			here_doc_init(t_input *input);
+int					here_doc_init(t_input *input, int size);
+int					check_f2(t_input *input);
+void				run(t_input *input, int cmd, char **envp);
+void				last_cmd(t_input *input, int cmd, char **envp);
+void				first_cmd(t_input *input, int cmd, char **envp);
+void				close_pipe(t_input *input);
+void				add_in_tab(char *str, char **tab);
 #endif

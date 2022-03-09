@@ -1,39 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 11:27:20 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/09 11:05:25 by brhajji-         ###   ########.fr       */
+/*   Created: 2022/03/09 10:56:48 by brhajji-          #+#    #+#             */
+/*   Updated: 2022/03/09 16:47:47 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../includes/pipex.h"
 
-int	print_err(int code)
+void	free_tab(char **tab)
 {
-	if (code)
+	int	i;
+
+	i = 0;
+	while (tab[i])
 	{
-		if (code == 99)
-			ft_printf("Error.\n");
-		if (code == -1)
-			ft_printf("Can't open the file.\n");
-		if (code == 50)
-			ft_printf("Invalid args.\n");
-		return (1);
+		free(tab[i]);
+		i++;
 	}
-	return (0);
+	free(tab);
 }
 
-int	check_f2(t_input *input)
+int	clean_pipex(t_input *input, int x)
 {
-	input->f2 = open(input->tmp, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (input->f2 == -1)
+	if (input)
 	{
-		perror("Outfile ");
-		return (1);
+		if (input->path)
+			free_tab(input->path);
+		if (input->cmd)
+			free_cmd(input);
+		if (input->f1)
+			close(input->f1);
+		if (input->f2)
+			close(input->f2);
+		if (input->fd)
+			free(input->fd);
+		if (open(".here_doc_tmp", O_RDWR) != -1)
+			unlink(".here_doc_tmp");
+		free(input);
+		input = NULL;
 	}
-	return (0);
+	return (x);
 }

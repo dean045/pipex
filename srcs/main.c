@@ -6,44 +6,11 @@
 /*   By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:16:18 by brhajji-          #+#    #+#             */
-/*   Updated: 2022/03/05 15:54:40 by brhajji-         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:51:08 by brhajji-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../includes/pipex.h"
-
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-int	clean_pipex(t_input *input, int x)
-{
-	if (input)
-	{
-		if (input->path)
-			free_tab(input->path);
-		if (input->cmd)
-			free_cmd(input);
-		if (input->f1)
-			close(input->f1);
-		if (input->f2)
-			close(input->f2);
-		if (input->limiter)
-			unlink(".here_doc_tmp");
-		free(input);
-		input = NULL;
-	}
-	return (x);
-}
 
 int	init_cmd(char **av, t_input *input, int here_doc)
 {
@@ -66,24 +33,8 @@ int	init_cmd(char **av, t_input *input, int here_doc)
 	return (0);
 }
 
-int	init_input(char **av, int ac, t_input **input, char **envp)
+int	input_suite(char **av, t_input **input, int here_doc)
 {
-	int	here_doc;
-
-	here_doc = 0;
-	if (!ft_strcmp(av[1], "here_doc"))
-		here_doc = 1;
-	*input = malloc(sizeof(t_input));
-	if (!input)
-		return (1);
-	(*input)->f1 = 0;
-	(*input)->f2 = 0;
-	(*input)->nb_cmd = ac - (3 + here_doc);
-	(*input)->fd = malloc(sizeof(t_fd) * (ac - 2 - here_doc));
-	if (init_cmd(av , *input, here_doc))
-		return (1);
-	(*input)->path = get_path(envp);
-	(*input)->tmp = av[ac - 1];
 	if (!here_doc)
 	{
 		if (!check_file(av[1]))
@@ -99,10 +50,63 @@ int	init_input(char **av, int ac, t_input **input, char **envp)
 	else
 	{
 		(*input)->limiter = av[2];
-		(*input)->f1 = here_doc_init(*input);
+		if (here_doc_init(*input, ft_strlen((*input)->limiter)) == -1)
+			return (1);
+		(*input)->f1 = open(".here_doc_tmp", O_RDONLY);
 		return (0);
 	}
 	return (1);
+}
+
+int	init_input(char **av, int ac, t_input **input, char **envp)
+{
+	int	here_doc;
+
+	here_doc = 0;
+	if (!ft_strcmp(av[1], "here_doc"))
+		here_doc = 1;
+	*input = malloc(sizeof(t_input));
+	if (!input)
+		return (1);
+	(*input)->f1 = 0;
+	(*input)->f2 = 0;
+	(*input)->path = get_path(envp);
+	(*input)->tmp = av[ac - 1];
+	(*input)->nb_cmd = ac - (3 + here_doc);
+	(*input)->fd = malloc(sizeof(t_fd) * (ac - 2 - here_doc));
+	if (!(*input)->fd)
+		return (1);
+	if (init_cmd(av, *input, here_doc))
+		return (1);
+	return (input_suite(av, input, here_doc));
+}
+
+void	pipex(t_input *input, char **envp)
+{
+	int	status;
+	int	i;
+
+	i = -1;
+	while (++i < input->nb_cmd)
+	{
+		if (i < input->nb_cmd - 1)
+		{
+			if (pipe(input->fd[i].fd) < 0)
+				return (perror("Pipe "));
+		}
+		if (i == 0)
+			first_cmd(input, i, envp);
+		else if (i == input->nb_cmd -1)
+			last_cmd(input, i, envp);
+		else
+			run(input, i, envp);
+		if (i)
+			close(input->fd[i - 1].fd[0]);
+		if (i < input->nb_cmd - 1)
+			close(input->fd[i].fd[1]);
+	}
+	while (--i > 0)
+		wait(&status);
 }
 
 int	main(int ac, char **av, char **envp)

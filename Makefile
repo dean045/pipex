@@ -6,14 +6,14 @@
 #    By: brhajji- <brhajji-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 17:34:58 by brhajji-          #+#    #+#              #
-#    Updated: 2022/03/05 15:15:18 by brhajji-         ###   ########.fr        #
+#    Updated: 2022/03/09 12:21:40 by brhajji-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR = ./srcs
 
 SRCS	= main.c error.c ft_split.c ft_strjoin.c parsing.c pipex.c ft_strcmp.c\
-			here_doc.c
+			here_doc.c ft_free.c
 
 PRINTF_DIR = /printf
 
@@ -23,7 +23,7 @@ NAME			=	pipex
 
 CC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror -g3
+CFLAGS			=	-Wall -Wextra -Werror -g
 
 RM				=	rm -f
 
@@ -43,7 +43,8 @@ clean:
 	cd printf && make clean	
 	${RM} ${OBJS}
 
-fclean:		clean			
+fclean:		clean
+		cd printf && make fclean			
 		${RM} ${NAME}
 
 re:			fclean all
